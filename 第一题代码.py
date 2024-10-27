@@ -60,14 +60,15 @@ def search(content,num):
 
 #定时爬取功能扩展
 def time_set(in_time):
+    in_page = int(input("请输入查询的页码（共19页）："))
+    in_request = get_request(in_page)
+    in_content = get_content(in_request)
+    in_num = int(input("请输入要查询多少条消息："))
     #设置休眠时间
     time.sleep(in_time)
-    #以下生成表格的代码功能与主程序中相应代码一致，爬取了第一页所有消息并存储
-    in_page=int(input("输入"))
-    in_request = get_request(1)
-    in_content = get_content(in_request)
+    #爬取用户想要查询的所有消息并保存
     in_data=[]
-    for i in range(1,16,1):
+    for i in range(1,in_num+1,1):
       in_title, in_time, in_link, in_detail = search(in_content, i)
       in_data.append((in_title, in_time, in_link, in_detail))
     df = pd.DataFrame(in_data, columns=('标题', '发布时间', '链接', '内容'))
